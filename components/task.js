@@ -7,7 +7,7 @@ class Task extends HTMLElement{
     // Called each time the element is added to document.
     connectedCallback(){
         // As far as possible, you should implement custom element setup in this callback rather than constructor.
-        this.innerHTML = `<p>This is autonomous custom element</p>`;
+        this.innerText = `This is autonomous custom element`;
     }
 }
 
