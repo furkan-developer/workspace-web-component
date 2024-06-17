@@ -1,17 +1,47 @@
 // creating autonomous custom element
-class Task extends HTMLElement{
-    constructor(){
-        super();
-    }
+class Task extends HTMLElement {
+  constructor() {
+    super();
 
-    // Called each time the element is added to document.
-    connectedCallback(){
-        // As far as possible, you should implement custom element setup in this callback rather than constructor.
-        this.innerText = `This is autonomous custom element`;
-    }
+    // Add Shadow DOM
+    this.attachShadow({ mode: "open" });
+
+    const style = document.createElement("style");
+    style.textContent = `
+        .task{
+            border: 1px solid red;
+            padding: 1rem 2rem;
+            margin: 1rem;
+            display: inline-block;
+        }
+        .task-title{
+            text-transform: uppercase;
+        }
+        `;
+
+    const wrapper = document.createElement("div");
+    wrapper.setAttribute("class", "task");
+
+    const taskTitleP = document.createElement("p");
+    taskTitleP.setAttribute("class", "task-title");
+    taskTitleP.textContent = "Task Title";
+    wrapper.appendChild(taskTitleP);
+
+    this.addEventListener('click',function(e){
+      console.log('Web component');
+    });
+
+    this.shadowRoot.append(style);
+    this.shadowRoot.append(wrapper);
+  }
+
+  // Called each time the element is added to document.
+  connectedCallback() {
+    // As far as possible, you should implement custom element setup in this callback rather than constructor.
+  }
 }
 
 // Registering a custom element to make available in a page
-customElements.define("task-component",Task);
+customElements.define("task-component", Task);
 
 export default Task;
