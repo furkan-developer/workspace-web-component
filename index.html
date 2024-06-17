@@ -7,9 +7,15 @@
     <title>Document</title>
 </head>
 <body>
-    
+    <!-- Template element only is checked for syntax validataion and isn't rendered by browser. -->
+    <template id="task-component-template">
+        <div class="task">
+            <p class="task-title"></p>
+        </div>
+    </template>
+
     <!-- Using autonomous custom element -->
-    <task-component></task-component>
+    <task-component task-title='Task title sample'></task-component>
 
     <script src="index.js" type="module"></script>
 </body>

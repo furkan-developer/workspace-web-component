@@ -19,25 +19,24 @@ class Task extends HTMLElement {
         }
         `;
 
-    const wrapper = document.createElement("div");
-    wrapper.setAttribute("class", "task");
+    const taskTemplate = document.getElementById('task-component-template');
 
-    const taskTitleP = document.createElement("p");
-    taskTitleP.setAttribute("class", "task-title");
-    taskTitleP.textContent = "Task Title";
-    wrapper.appendChild(taskTitleP);
-
-    this.addEventListener('click',function(e){
-      console.log('Web component');
+    this.addEventListener("click", function (e) {
+      console.log("Web component");
     });
 
     this.shadowRoot.append(style);
-    this.shadowRoot.append(wrapper);
+    this.shadowRoot.append(taskTemplate.content.cloneNode(true));
   }
 
   // Called each time the element is added to document.
   connectedCallback() {
     // As far as possible, you should implement custom element setup in this callback rather than constructor.
+    let titleText = 'Task Title';
+    if (this.hasAttribute('task-title'))
+      titleText = this.getAttribute('task-title');
+    
+    this.shadowRoot.querySelector('.task-title').textContent = titleText;
   }
 }
 
