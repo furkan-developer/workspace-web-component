@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using WebApi.Database.efCore;
 using WebApi.Models.Entities;
 using NSwag.AspNetCore;
+using WebApi.Models.DTOs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,9 +38,12 @@ app.MapGet("/", ([FromServices] ApplicationDbContext dbContext) =>
     return jobs;
 });
 
-app.MapPost("/", ([FromBody] Job job, [FromServices] ApplicationDbContext dbContext) =>
+app.MapPost("/", ([FromBody] JobCreateDTO dto, [FromServices] ApplicationDbContext dbContext) =>
 {
+    Job job = new Job() { TaskTitle = dto.JobTitle };
+
     dbContext.Jobs.Add(job);
+    dbContext.SaveChanges();
 });
 
 app.Run();
