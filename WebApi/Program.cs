@@ -33,15 +33,15 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-app.MapGet("/jobs", ([FromServices] ApplicationDbContext dbContext) =>
+app.MapGet("/jobs/{stageName}", ([FromServices] ApplicationDbContext dbContext, [FromRoute] string stageName) =>
 {
-    var jobs = dbContext.Jobs.ToList();
+    var jobs = dbContext.Jobs.Where(job => job.StageName.Equals(stageName)).ToList();
     return Results.Ok(new { data = jobs, isSuccess = true });
 });
 
 app.MapPost("/jobs", ([FromBody] JobCreateDTO dto, [FromServices] ApplicationDbContext dbContext) =>
 {
-    Job job = new Job() { JobTitle = dto.JobTitle };
+    Job job = new Job() { JobTitle = dto.JobTitle, StageName = dto.StageName };
 
     dbContext.Jobs.Add(job);
     dbContext.SaveChanges();
