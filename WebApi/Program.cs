@@ -4,6 +4,7 @@ using WebApi.Database.efCore;
 using WebApi.Models.Entities;
 using NSwag.AspNetCore;
 using WebApi.Models.DTOs;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,7 +36,7 @@ if (app.Environment.IsDevelopment())
 app.MapGet("/jobs", ([FromServices] ApplicationDbContext dbContext) =>
 {
     var jobs = dbContext.Jobs.ToList();
-    return jobs;
+    return Results.Ok(new { data = jobs, isSuccess = true });
 });
 
 app.MapPost("/jobs", ([FromBody] JobCreateDTO dto, [FromServices] ApplicationDbContext dbContext) =>
@@ -44,6 +45,8 @@ app.MapPost("/jobs", ([FromBody] JobCreateDTO dto, [FromServices] ApplicationDbC
 
     dbContext.Jobs.Add(job);
     dbContext.SaveChanges();
+
+    return Results.Ok(new { data = job, isSuccess = true });
 });
 
 app.Run();
