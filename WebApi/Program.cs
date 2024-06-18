@@ -32,13 +32,13 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-app.MapGet("/", ([FromServices] ApplicationDbContext dbContext) =>
+app.MapGet("/jobs", ([FromServices] ApplicationDbContext dbContext) =>
 {
     var jobs = dbContext.Jobs.ToList();
     return jobs;
 });
 
-app.MapPost("/", ([FromBody] JobCreateDTO dto, [FromServices] ApplicationDbContext dbContext) =>
+app.MapPost("/jobs", ([FromBody] JobCreateDTO dto, [FromServices] ApplicationDbContext dbContext) =>
 {
     Job job = new Job() { TaskTitle = dto.JobTitle };
 
