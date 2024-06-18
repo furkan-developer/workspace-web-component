@@ -2,6 +2,7 @@
 class Task extends HTMLElement {
   constructor() {
     super();
+    this.draggable = false;
 
     // Add Shadow DOM
     this.attachShadow({ mode: "open" });
@@ -11,11 +12,8 @@ class Task extends HTMLElement {
     style.setAttribute("href", "components/task.css");
 
     const taskTemplate = document.createElement("div");
-    taskTemplate.classList.add('task');
-    taskTemplate.setAttribute('draggable','true');
-    taskTemplate.addEventListener('drag',function(e){
-      console.log('element dragging');
-    });
+    taskTemplate.classList.add("task");
+    taskTemplate.setAttribute("draggable", "true");
     taskTemplate.innerHTML = `
           <p class="task-title">task title</p>
           <div class="task-footer">
@@ -37,6 +35,8 @@ class Task extends HTMLElement {
 
     this.shadowRoot.append(style);
     this.shadowRoot.append(taskTemplate);
+    this.dragHandler = this.dragHandler.bind(this);
+    this.dragendHandler = this.dragendHandler.bind(this);
   }
 
   // Called each time the element is added to document.
@@ -52,6 +52,18 @@ class Task extends HTMLElement {
     deleteTaskButton.addEventListener("click", function (e) {
       alert("Delete Task");
     });
+
+    const taskElement = this.shadowRoot.querySelector(".task");
+    taskElement.addEventListener("drag", this.dragHandler);
+    taskElement.addEventListener("dragend", this.dragendHandler);
+  }
+
+  dragHandler(e) {
+    this.draggable = true;
+  }
+
+  dragendHandler(e) {
+    if (this.draggable === true) this.draggable = false;
   }
 }
 
