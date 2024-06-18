@@ -41,7 +41,7 @@ app.MapGet("/jobs", ([FromServices] ApplicationDbContext dbContext) =>
 
 app.MapPost("/jobs", ([FromBody] JobCreateDTO dto, [FromServices] ApplicationDbContext dbContext) =>
 {
-    Job job = new Job() { TaskTitle = dto.JobTitle };
+    Job job = new Job() { JobTitle = dto.JobTitle };
 
     dbContext.Jobs.Add(job);
     dbContext.SaveChanges();

@@ -8,6 +8,6 @@ namespace WebApi.Models.Entities
     public class Job
     {
         public Guid Id { get; set; }
-        public string TaskTitle { get; set; }
+        public string JobTitle { get; set; }
     }
 }
