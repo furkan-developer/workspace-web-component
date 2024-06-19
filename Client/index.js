@@ -17,5 +17,34 @@ createTaskDialogCloseBtn.addEventListener("click", () => {
   createTaskDialog.close();
 });
 createTaskDialogCreateBtn.addEventListener("click", () => {
-    console.log('task will send to server for creating it');
+  const titleInput = document.getElementById("title");
+  const title = titleInput.value;
+
+  fetch(`http://localhost:5067/jobs`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ jobTitle: title }),
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .then((result) => {
+      if (result.isSuccess) {
+        const allStageComponents = document.querySelectorAll("stage-component");
+        const backlogStage = [...allStageComponents].find(
+          (stage) => stage.getAttribute("stage-title") === "backlog"
+        );
+
+        const task = document.createElement("task-component");
+        task.setAttribute("task-title", result.data.jobTitle);
+        backlogStage.append(task);
+
+        titleInput.value = '';
+
+        alert('The new task is successfully created');
+      }
+    })
+    .catch((err) => console.log(err));
 });
