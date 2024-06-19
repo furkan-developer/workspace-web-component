@@ -61,4 +61,18 @@ app.MapPost("/jobs", ([FromBody] JobCreateDTO dto, [FromServices] ApplicationDbC
     return Results.Ok(new { data = job, isSuccess = true });
 });
 
+app.MapDelete("/jobs/{id}", ([FromRoute] Guid id, [FromServices] ApplicationDbContext dbContext) =>
+{
+    var job = dbContext.Jobs.SingleOrDefault(job => Guid.Equals(id, job.Id));
+    if (job is not null)
+    {
+        dbContext.Jobs.Remove(job);
+        dbContext.SaveChanges();
+        return Results.Ok(new { isSuccess = true });
+    }
+
+    return Results.NotFound(new { isSuccess = false, errorMessage = "The task is not available" });
+});
+
+
 app.Run();
