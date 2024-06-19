@@ -1,0 +1,123 @@
+*,
+::after,
+::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html,
+body {
+  height: 100%;
+}
+html {
+  font-size: 10px;
+}
+body {
+  font-size: 1.6rem;
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+header {
+  padding: 0.5rem 0.7rem;
+  display: flex;
+  justify-content: flex-end;
+  border-bottom: 1px solid gray;
+}
+.stages_wrapper {
+  display: flex;
+  background-color: rgb(248, 249, 251);
+  overflow-y: auto;
+}
+.create-task-button {
+  outline: none;
+  border: 1px solid #08cf65;
+  border-radius: 1rem;
+  padding: 0.7rem 1rem;
+  color: #08cf65;
+
+  &:hover {
+    color: white;
+    background-color: #08cf65;
+    cursor: pointer;
+  }
+}
+.create-one-task-dialog {
+  border: 1px solid #198754;
+  border-radius: 10px;
+  box-shadow: 0 5px 5px rgba(25, 135, 84, 0.3);
+  max-width: 750px;
+  width: 80%;
+  background-color: white;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+
+  &::backdrop {
+    background: rgba(0, 0, 0, 0.5);
+  }
+
+  & .top {
+    background-color: #198754;
+    padding: 1.3rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    & h2 {
+      font-size: 2.5rem;
+      color: white;
+    }
+
+    & svg {
+      height: 2.5rem;
+      width: 2.5rem;
+      color: white;
+      cursor: pointer;
+    }
+  }
+
+  form{
+    padding: 1rem 2rem;
+  }
+
+  & .form-group {
+    margin-bottom: 2rem;
+  }
+
+  & label {
+    display: inline-block;
+    margin-bottom: 0.7rem;
+    font-weight: 500;
+  }
+
+  & input[type="text"]{
+    width: 100%;
+    padding: 1rem 1.5rem;
+    border: 1px solid #ced4da;
+    border-radius: 0.375rem;
+    line-height: 1.5;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  }
+
+  & input[type="text"]:focus{
+    border-color: #20c997;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  }
+
+  & button[type="button"] {
+    border: 1px solid #198754;
+    border-radius: 0.3rem;
+    padding: 1rem 2rem;
+    color: #198754;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    background-color: white;
+    font-size: 1.5rem;
+  }
+
+  & button[type="button"]:hover {
+    background-color: #198754;
+    color: white;
+  }
+}

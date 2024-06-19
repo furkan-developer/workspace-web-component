@@ -1,0 +1,27 @@
+:host {
+  flex-basis: 25%;
+  height: 100%;
+
+  flex-shrink: 0;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+:host::-webkit-scrollbar {
+  display: none;
+}
+.stage{
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  padding-top: 0;
+  height: 100%;
+}
+.stage-header {
+  font-weight: 500;
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+}
+.stage-dragenter{
+  background-color: rgb(183, 223, 231);
+  border: 2px dashed gray;
+}
