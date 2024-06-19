@@ -20,31 +20,36 @@ createTaskDialogCreateBtn.addEventListener("click", () => {
   const titleInput = document.getElementById("title");
   const title = titleInput.value;
 
-  fetch(`http://localhost:5067/jobs`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ jobTitle: title }),
-  })
-    .then((response) => {
-      return response.json();
+  if (!title) {
+    alert("Title is required");
+  } else {
+    fetch(`http://localhost:5067/jobs`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ jobTitle: title }),
     })
-    .then((result) => {
-      if (result.isSuccess) {
-        const allStageComponents = document.querySelectorAll("stage-component");
-        const backlogStage = [...allStageComponents].find(
-          (stage) => stage.getAttribute("stage-title") === "backlog"
-        );
+      .then((response) => {
+        return response.json();
+      })
+      .then((result) => {
+        if (result.isSuccess) {
+          const allStageComponents =
+            document.querySelectorAll("stage-component");
+          const backlogStage = [...allStageComponents].find(
+            (stage) => stage.getAttribute("stage-title") === "backlog"
+          );
 
-        const task = document.createElement("task-component");
-        task.setAttribute("task-title", result.data.jobTitle);
-        backlogStage.append(task);
+          const task = document.createElement("task-component");
+          task.setAttribute("task-title", result.data.jobTitle);
+          backlogStage.append(task);
 
-        titleInput.value = '';
+          titleInput.value = "";
 
-        alert('The new task is successfully created');
-      }
-    })
-    .catch((err) => console.log(err));
+          alert("The new task is successfully created");
+        }
+      })
+      .catch((err) => console.log(err));
+  }
 });
