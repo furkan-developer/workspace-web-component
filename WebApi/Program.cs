@@ -53,7 +53,7 @@ app.MapGet("/jobs/{stageName}", ([FromServices] ApplicationDbContext dbContext, 
 
 app.MapPost("/jobs", ([FromBody] JobCreateDTO dto, [FromServices] ApplicationDbContext dbContext) =>
 {
-    Job job = new Job() { JobTitle = dto.JobTitle, StageName = dto.StageName };
+    Job job = new Job() { JobTitle = dto.JobTitle, StageName = "backlog" };
 
     dbContext.Jobs.Add(job);
     dbContext.SaveChanges();
