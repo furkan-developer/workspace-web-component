@@ -6,6 +6,7 @@ using NSwag.AspNetCore;
 using WebApi.Models.DTOs;
 using Microsoft.AspNetCore.Http.HttpResults;
 
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<ApplicationDbContext>(opt => opt.UseInMemoryDatabase("JobDb"));
@@ -17,6 +18,15 @@ builder.Services.AddOpenApiDocument(config =>
     config.DocumentName = "JobDb";
     config.Title = "JobDb v1";
     config.Version = "v1";
+});
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      policy =>
+                      {
+                          policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+                      });
 });
 
 var app = builder.Build();
@@ -32,6 +42,8 @@ if (app.Environment.IsDevelopment())
         config.DocExpansion = "list";
     });
 }
+
+app.UseCors(MyAllowSpecificOrigins);
 
 app.MapGet("/jobs/{stageName}", ([FromServices] ApplicationDbContext dbContext, [FromRoute] string stageName) =>
 {
