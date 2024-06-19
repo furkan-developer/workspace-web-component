@@ -33,6 +33,21 @@ class Stage extends HTMLElement {
       this.#allowDrop = this.getAttribute("allow-drop");
 
     if (this.#allowDrop === true) this.obtainDroppableSkill();
+
+    fetch(
+      `http://localhost:5067/jobs/${
+        !this.stageTitle ? "" : this.stageTitle.toLowerCase()
+      }`
+    )
+      .then((response) => {
+        return response.json();
+      })
+      .then((result) => {
+        if(result.isSuccess){
+          this.renderTask(result.data);
+        }
+      })
+      .catch((err) => console.log(err));
   }
 
   get stageTitle() {
@@ -43,6 +58,17 @@ class Stage extends HTMLElement {
     }
 
     return null;
+  }
+
+  renderTask(tasks){
+    if(tasks.length > 0){
+      console.log(tasks);
+      tasks.forEach(element => {
+        const task = document.createElement('task-component');
+        task.setAttribute('task-title',element.jobTitle);
+        this.append(task);
+      });
+    }
   }
 
   obtainDroppableSkill() {

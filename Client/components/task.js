@@ -2,8 +2,7 @@
 class Task extends HTMLElement {
   constructor() {
     super();
-    this.draggable = false;
-
+    
     // Add Shadow DOM
     this.attachShadow({ mode: "open" });
 
@@ -63,7 +62,7 @@ class Task extends HTMLElement {
   }
 
   dragendHandler(e) {
-    if (this.draggable === true) this.draggable = false;
+    if (this.hasAttribute("draggable")) delete this.draggable;
   }
 }
 
