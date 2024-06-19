@@ -1,7 +1,7 @@
 class Stage extends HTMLElement {
   #shadowDom;
   #allowDrop = true;
-
+  
   constructor() {
     super();
     this.#shadowDom = this.attachShadow({ mode: "open" });
@@ -66,6 +66,8 @@ class Stage extends HTMLElement {
       tasks.forEach(element => {
         const task = document.createElement('task-component');
         task.setAttribute('task-title',element.jobTitle);
+        task.taskId = element.id;
+
         this.append(task);
       });
     }

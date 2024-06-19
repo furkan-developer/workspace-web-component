@@ -1,8 +1,9 @@
 // creating autonomous custom element
 class Task extends HTMLElement {
+  taskId;
   constructor() {
     super();
-    
+
     // Add Shadow DOM
     this.attachShadow({ mode: "open" });
 
@@ -36,6 +37,7 @@ class Task extends HTMLElement {
     this.shadowRoot.append(taskTemplate);
     this.dragHandler = this.dragHandler.bind(this);
     this.dragendHandler = this.dragendHandler.bind(this);
+    this.deleteHandler = this.deleteHandler.bind(this);
   }
 
   // Called each time the element is added to document.
@@ -48,9 +50,7 @@ class Task extends HTMLElement {
     this.shadowRoot.querySelector(".task-title").textContent = titleText;
 
     const deleteTaskButton = this.shadowRoot.getElementById("delete");
-    deleteTaskButton.addEventListener("click", function (e) {
-      alert("Delete Task");
-    });
+    deleteTaskButton.addEventListener("click", this.deleteHandler);
 
     const taskElement = this.shadowRoot.querySelector(".task");
     taskElement.addEventListener("drag", this.dragHandler);
@@ -63,6 +63,29 @@ class Task extends HTMLElement {
 
   dragendHandler(e) {
     if (this.hasAttribute("draggable")) delete this.draggable;
+  }
+
+  deleteHandler(e) {
+    fetch(`http://localhost:5067/jobs/${this.taskId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((result) => {
+        if (result.isSuccess) {
+          const allTaskComponents = document.querySelectorAll("task-component");
+          const deletedTask = [...allTaskComponents].find((task) => task.taskId == this.taskId);
+          deletedTask.remove();
+        }
+        else{
+          alert(result.errorMessage);
+        }
+      })
+      .catch((err) => console.log(err));
   }
 }
 
