@@ -8,16 +8,48 @@
   </head>
   <body>
     <header>
-      <div class="create-task-button">Create Task</div>
+      <div id="create-task-button" class="create-task-button">Create Task</div>
     </header>
     <main class="stages_wrapper">
       <stage-component allow-drop="false" stage-title="backlog">
       </stage-component>
       <stage-component stage-title="in progress"></stage-component>
       <stage-component stage-title="done"></stage-component>
-      <stage-component stage-title="canceled">
-      </stage-component>
+      <stage-component stage-title="canceled"> </stage-component>
     </main>
+
+    <dialog id="create-one-task-dialog" class="create-one-task-dialog">
+      <div class="top">
+        <h2>Create Task</h2>
+        <svg
+          id="create-task-dialog-close-btn"
+          stroke="currentColor"
+          fill="currentColor"
+          stroke-width="0"
+          viewBox="0 0 512 512"
+          height="1em"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="m289.94 256 95-95A24 24 0 0 0 351 127l-95 95-95-95a24 24 0 0 0-34 34l95 95-95 95a24 24 0 1 0 34 34l95-95 95 95a24 24 0 0 0 34-34z"
+          ></path>
+        </svg>
+      </div>
+      <form id="taskForm">
+        <div class="form-group">
+          <label for="title">Title</label>
+          <input type="text" id="title" name="title" required />
+        </div>
+        <button
+          id="create-task-dialog-create-button"
+          type="button"
+        >
+          Create Task
+        </button>
+      </form>
+    </dialog>
+
     <script src="index.js" type="module"></script>
   </body>
 </html>
