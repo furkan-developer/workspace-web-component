@@ -43,6 +43,7 @@ createTaskDialogCreateBtn.addEventListener("click", () => {
 
           const task = document.createElement("task-component");
           task.setAttribute("task-title", result.data.jobTitle);
+          task.taskId = result.data.id;
           backlogStage.append(task);
 
           titleInput.value = "";
